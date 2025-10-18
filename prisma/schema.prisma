@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+}
+
+model Zone {
+  Id           Int    @id @default(autoincrement())
+  NiceId       String?
+  Name         String
+  OrganizationId Int
+  IsActive     Boolean @default(false)
+}
+
+model Ward {
+  Id      Int    @id @default(autoincrement())
+  NiceId  Int
+  Name    String
+  ZoneId  Int
+  IsActive Boolean @default(false)
+}
+
+model PrabhagGeoCoordinates {
+  Id            Int      @id @default(autoincrement()) @map("Id")
+  PrabhagId     Int?
+  KML           String?
+  OrganizationId Int?
+}
+
+model Prabhag {
+  Id          Int     @id @default(autoincrement()) @map("Id")
+  NiceId      Int
+  ObjectId    Int
+  Name        String?
+  WardId      Int?
+  SubId       String?
+  IsActive    Boolean @default(false)
+}
