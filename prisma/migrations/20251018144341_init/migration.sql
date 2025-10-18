@@ -1,0 +1,27 @@
+/*
+  Warnings:
+
+  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
+
+*/
+-- DropTable
+DROP TABLE "public"."User";
+
+-- CreateTable
+CREATE TABLE "user" (
+    "id" SERIAL NOT NULL,
+    "organizationId" INTEGER NOT NULL,
+    "username" TEXT NOT NULL,
+    "email" TEXT,
+    "designation" TEXT,
+    "phone" TEXT,
+    "passwordHash" TEXT,
+    "firstName" TEXT,
+    "lastName" TEXT,
+    "displayName" TEXT,
+    "title" TEXT,
+    "password" TEXT,
+    "isActive" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "user_pkey" PRIMARY KEY ("id")
+);

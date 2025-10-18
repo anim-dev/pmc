@@ -7,42 +7,215 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
+model users {
+  id             Int     @id @default(autoincrement())
+  organizationid Int
+  username       String
+  email          String?
+  designation    String?
+  phone          String?
+  passwordhash   String?
+  firstname      String?
+  lastname       String?
+  displayname    String?
+  title          String?
+  password       String?
+  isactive       Boolean @default(false)
 }
 
-model Zone {
-  Id           Int    @id @default(autoincrement())
-  NiceId       String?
-  Name         String
-  OrganizationId Int
-  IsActive     Boolean @default(false)
+model authtokens {
+  id                  BigInt   @id @default(autoincrement())
+  accesstoken         String?
+  citizenid           BigInt?
+  userid              Int?
+  created             DateTime
+  expires             DateTime
+  citizenloginotpid   BigInt?
 }
 
-model Ward {
-  Id      Int    @id @default(autoincrement())
-  NiceId  Int
-  Name    String
-  ZoneId  Int
-  IsActive Boolean @default(false)
+model citizenloginotps {
+  id          BigInt   @id @default(autoincrement())
+  otp         String?
+  created     DateTime
+  phone       String?
+  citizenid   BigInt?
 }
 
-model PrabhagGeoCoordinates {
-  Id            Int      @id @default(autoincrement()) @map("Id")
-  PrabhagId     Int?
-  KML           String?
-  OrganizationId Int?
+model citizens {
+  id                  BigInt   @id @default(autoincrement())
+  organizationid      Int
+  name                String?
+  gender              String?
+  phone               String?
+  isbhararipathakuser Boolean
 }
 
-model Prabhag {
-  Id          Int     @id @default(autoincrement()) @map("Id")
-  NiceId      Int
-  ObjectId    Int
-  Name        String?
-  WardId      Int?
-  SubId       String?
-  IsActive    Boolean @default(false)
+model complaintevidences {
+  id           BigInt   @id @default(autoincrement())
+  complaintid  BigInt?
+  type         Int
+  filepath     String?
+}
+
+model complaintfeedbacks {
+  id           BigInt   @id @default(autoincrement())
+  complaintid  BigInt?
+  rating       Int
+  text         String?
+  timestamp    DateTime
+}
+
+model complaintstatuslogevidences {
+  id                    BigInt   @id @default(autoincrement())
+  type                  Int
+  filepath              String?
+  complaintstatuslogid  BigInt?
+}
+
+model complaintstatuslogs {
+  id            BigInt   @id @default(autoincrement())
+  status        String?
+  timestamp     DateTime
+  complaintid   BigInt?
+  updatedbyid   Int?
+  foruserid     Int?
+  remarks       String?
+  logmessage    String?
+  latitude      String?
+  longitude     String?
+}
+
+model complaints {
+  id                    BigInt   @id @default(autoincrement())
+  complaintid           String?
+  latitude              String?
+  longitude             String?
+  address               String?
+  description           String?
+  potholecount          Int
+  pothholetypeid        Int?
+  timestamp             DateTime
+  citizenid             BigInt?
+  organizationid        Int?
+  prabhagid             Int?
+  isflaggedfornodal     Boolean  @default(false)
+}
+
+model organizations {
+  id             Int      @id @default(autoincrement())
+  name           String?
+  hostname       String?
+  apihostname    String?
+  isdeleted      Boolean
+  logo           String?
+}
+
+model potholetypes {
+  id             Int      @id @default(autoincrement())
+  name           String?
+  organizationid Int?
+  isactive       Boolean  @default(false)
+}
+
+model prabhaggeocoordinates {
+  id             Int      @id @default(autoincrement())
+  prabhagid      Int?
+  kml            String?
+  organizationid Int?
+}
+
+model prabhags {
+  id         Int      @id @default(autoincrement())
+  niceid     Int
+  objectid   Int
+  name       String?
+  wardid     Int?
+  subid      String?
+  isactive   Boolean  @default(false)
+}
+
+model roles {
+  id             Int      @id @default(autoincrement())
+  name           String?
+  organizationid Int?
+}
+
+model smslogs {
+  id                BigInt   @id @default(autoincrement())
+  timestamp         DateTime
+  templateid        String?
+  body              String?
+  phone             String?
+  citizenid         BigInt?
+  userid            Int?
+  reason            String?
+  issent            Boolean
+  isdelivered       String?
+  gatewayrecordid   String?
+  complaintid       BigInt?
+}
+
+model userprabhags {
+  id         Int      @id @default(autoincrement())
+  userid     Int?
+  prabhagid  Int?
+}
+
+model userroles {
+  id       Int      @id @default(autoincrement())
+  userid   Int?
+  roleid   Int?
+}
+
+model userwards {
+  id       Int      @id @default(autoincrement())
+  userid   Int?
+  wardid   Int?
+}
+
+model userzones {
+  id       Int      @id @default(autoincrement())
+  userid   Int?
+  zoneid   Int?
+}
+
+model wards {
+  id         Int      @id @default(autoincrement())
+  niceid     Int
+  name       String?
+  zoneid     Int?
+  isactive   Boolean  @default(false)
+}
+
+model workqualitystandards {
+  id                    BigInt   @id @default(autoincrement())
+  usedstandard1         Boolean
+  usedstandard2         Boolean
+  usedstandard3         Boolean
+  usedstandard4         Boolean
+  complaintstatuslogid  BigInt?
+}
+
+model zones {
+  id              Int      @id @default(autoincrement())
+  niceid          String?
+  name            String?
+  organizationid  Int
+  isactive        Boolean  @default(false)
+}
+
+model work {
+  id      Int    @id @default(autoincrement())
+  name    String
+  code    String?
+  isactive Boolean @default(true)
+  createdat DateTime @default(now())
+  updatedat DateTime @updatedAt
+}
+
+model master_table_map {
+  id        Int    @id @default(autoincrement())
+  code      String @unique 
+  tablename String
+  isactive  Boolean @default(true)
 }

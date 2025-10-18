@@ -1,0 +1,23 @@
+services:
+  web:
+    image: myapp:latest
+    environment:
+      - UPLOAD_DIR=/app/uploads
+    volumes:
+      - ./data/uploads:/app/uploads    # host-dir : container-dir
+
+
+sudo mkdir -p /var/lib/myapp/uploads
+sudo chown -R myappuser:myappgroup /var/lib/myapp/uploads
+sudo chmod -R 750 /var/lib/myapp/uploads
+
+
+// app.ts
+import express from "express";
+import path from "path";
+
+const app = express();
+const uploadDir = process.env.UPLOAD_DIR ?? path.join(process.cwd(), "public", "uploads");
+
+// serve static
+app.use("/uploads", express.static(uploadDir, { index: false, extensions: ["jpg","png","pdf"] }));
