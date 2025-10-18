@@ -219,3 +219,69 @@ model master_table_map {
   tablename String
   isactive  Boolean @default(true)
 }
+
+model project {
+  id                  Int      @id @default(autoincrement())
+  title               String
+  projectcost         Float
+  fromdate            DateTime
+  todate              DateTime
+  zoneid              Int      // Reference to your zones table, or remove if just string
+  contractorname      String
+  outwardnumber       String
+  type_of_work        String   // Or use Int if referencing work table
+  outwarddate         DateTime
+  imagepath           String?  // Store image file path, nullable if not always present
+  je_name             String?  // Junior Engineer
+  de_name             String?  // Deputy Engineer
+  ee_name             String?  // Executive Engineer
+  consultant          String?
+  qualityassurance    String?
+  description         String?
+  createdat           DateTime @default(now())
+  updatedat           DateTime @updatedAt
+  isactive            Boolean  @default(true)
+
+  project_status_mappings project_status_mapping[]
+}
+
+model stage_type {
+  id        Int      @id @default(autoincrement())
+  name      String
+  code      String
+  isactive  Boolean  @default(true)
+  createdat DateTime @default(now())
+  updatedat DateTime @updatedAt
+}
+
+model project_status {
+  id        Int      @id @default(autoincrement())
+  name      String   // e.g., "Pending", "In Progress", "Completed"
+  code      String   // e.g., "PENDING", "IN_PROGRESS", "COMPLETED"
+  isactive  Boolean  @default(true)
+  createdat DateTime @default(now())
+  updatedat DateTime @updatedAt
+
+  // Relation for mappings
+  project_status_mappings project_status_mapping[]
+}
+
+model project_status_mapping {
+  id         Int           @id @default(autoincrement())
+  project_id Int
+  status_id  Int
+  changedat  DateTime      @default(now()) // Optionally track status change time
+
+  // Relations
+  project     project?        @relation(fields: [project_id], references: [id])
+  status      project_status  @relation(fields: [status_id], references: [id])
+}
+
+model budget_utilization {
+  id        Int      @id @default(autoincrement())
+  name      String
+  code      String
+  isactive  Boolean  @default(true)
+  createdat DateTime @default(now())
+  updatedat DateTime @updatedAt
+}

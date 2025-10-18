@@ -7,11 +7,11 @@ import { addNewProject_Model } from '../model/addProjectModel';
 const router: Router = express.Router();
 
 
-router.get('/addNewProject', 
+router.post('/addNewProject', 
     ControllerTryCatch(
         async (req: Request, res: Response) => {
             const finalResp = await addNewProject_Model(req);
-            return httpResponseStruct(req, res, true, 200, "Test", null);
+            return httpResponseStruct(req, res, true, finalResp.status, finalResp.message, null);
         },
         "addNewProject"
     )

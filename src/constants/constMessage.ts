@@ -52,19 +52,8 @@ export type Message = typeof resMsgDB;
 
 
 export const utilityMsg = Object.freeze({
-    REQ_SANITIZATION_MSG:{
-      REQ_SAN_FAIL:'Request sanitization failed',
-      BODY_SAN_FAIL:'Request body sanitization failed - potentially malicious content detected',
-      QRY_SAN_FAIL:'Query parameter sanitization failed - request rejected for security',
-      URL_PARAM_UNSAFE:'Sanitized URL params are unsafe',
-      URL_HIGH_RISK:'URL parameters contain potentially dangerous content',
-      URL_PARAM_SAN_FAIL:'Param sanitization failed unexpectedly'
-    },
-    RATE_LIMIT_MSG:{
-      CONFIG_ERR:'Rate limiter configuration error',
-      IP_NOT_FOUND:'Unable to identify client'
-    },
-    RESOURCE_NOT_FOUND:{
-     RESRC_NT_FND:'Api not found', 
+    PROJECT:{
+      PROJECT_CREATE: "Project created successfully.",
+      PROJECT_UPDATE: "Project updated successfully."
     }
 })

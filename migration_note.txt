@@ -1,4 +1,4 @@
----- CONVERT ALL TABLE AN COLUMN NAME TO SMALLCASE ----
+---- 1. CONVERT ALL TABLE AN COLUMN NAME TO SMALLCASE ----
 SELECT table_schema, table_name, lower(table_name) AS new_name
 FROM information_schema.tables
 WHERE table_schema NOT IN ('pg_catalog','information_schema')
@@ -99,7 +99,7 @@ ORDER BY table_schema, table_name;
 
 
 
----- DROP ALL TABLES IN SMALL CASE ----
+---- 2. DROP ALL TABLES IN SMALL CASE ----
 
 DROP TABLE IF EXISTS
   authtokens, citizenloginotps, citizens, complaintevidences, complaintfeedbacks,
