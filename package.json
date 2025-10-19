@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "dev:compile:watch": "cross-env NODE_ENV=development tsx watch src/server.ts",
-    "dist:prod": "cross-env NODE_ENV=production npx tsc",
-    "prod:build": "cross-env NODE_ENV=production npx tsc && node dist/server.js",
-    "prod:watch:compile": "cross-env NODE_ENV=production tsc --watch",
-    "prod:watch:run": "cross-env NODE_ENV=production node --watch dist/server.js",
-    "migrate:dev": "npx prisma migrate  dev --name init",
+    "dev:compile:watch": "tsx watch src/server.ts",
+    "dist:prod": "npx tsc",
+    "prod:build": "npx tsc && node dist/server.js",
+    "prod:watch:compile": "tsc --watch",
+    "prod:watch:run": "node --watch dist/server.js",
+    "migrate:dev": "npx prisma migrate dev --name init",
     "migrate:prod": "npx prisma migrate deploy"
   },
   "author": "",

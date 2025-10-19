@@ -21,3 +21,28 @@ const uploadDir = process.env.UPLOAD_DIR ?? path.join(process.cwd(), "public", "
 
 // serve static
 app.use("/uploads", express.static(uploadDir, { index: false, extensions: ["jpg","png","pdf"] }));
+
+
+----------------------------------
+
+Old-package
+"scripts": {
+    "dev:compile:watch": "cross-env NODE_ENV=development tsx watch src/server.ts",
+    "dist:prod": "cross-env NODE_ENV=production npx tsc",
+    "prod:build": "cross-env NODE_ENV=production npx tsc && node dist/server.js",
+    "prod:watch:compile": "cross-env NODE_ENV=production tsc --watch",
+    "prod:watch:run": "cross-env NODE_ENV=production node --watch dist/server.js",
+    "migrate:dev": "npx prisma migrate  dev --name init",
+    "migrate:prod": "npx prisma migrate deploy"
+  },
+
+  new
+   "scripts": {
+    "dev:compile:watch": "tsx watch src/server.ts",
+    "dist:prod": "npx tsc",
+    "prod:build": "npx tsc && node dist/server.js",
+    "prod:watch:compile": "tsc --watch",
+    "prod:watch:run": "node --watch dist/server.js",
+    "migrate:dev": "npx prisma migrate dev --name init",
+    "migrate:prod": "npx prisma migrate deploy"
+  },
