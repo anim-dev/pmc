@@ -46,3 +46,5 @@ Old-package
     "migrate:dev": "npx prisma migrate dev --name init",
     "migrate:prod": "npx prisma migrate deploy"
   },
+
+  script_chang: "prod:watch:run": "tsx --watch dist/server.js",

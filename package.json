@@ -7,7 +7,7 @@
     "dist:prod": "npx tsc",
     "prod:build": "npx tsc && node dist/server.js",
     "prod:watch:compile": "tsc --watch",
-    "prod:watch:run": "node --watch dist/server.js",
+    "prod:watch:run": "tsx --watch dist/server.js",
     "migrate:dev": "npx prisma migrate dev --name init",
     "migrate:prod": "npx prisma migrate deploy"
   },
