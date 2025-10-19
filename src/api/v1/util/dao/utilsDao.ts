@@ -36,7 +36,7 @@ export const fetchAllZones_Dao = AsyncDaoTryCatch(
 );
 
 export const fetchWardsByZone_Dao = AsyncDaoTryCatch(
-    async (zoneId: Number) => {
+    async (zoneId: any) => {
         const data =  await prisma.wards.findMany({ where: { zoneId: zoneId } });
         return createInternalResponse(true, statusCode.HTTP.OK, '', data);
     },
@@ -44,7 +44,7 @@ export const fetchWardsByZone_Dao = AsyncDaoTryCatch(
 );
 
 export const fetchPrabhagsByWard_Dao = AsyncDaoTryCatch(
-    async (wardId: Number) => {
+    async (wardId: any) => {
         const data = await prisma.prabhags.findMany({ where: { wardId: wardId } });
         return createInternalResponse(true, statusCode.HTTP.OK, '', data);
     },
