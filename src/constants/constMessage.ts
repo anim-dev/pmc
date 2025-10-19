@@ -6,7 +6,7 @@ export const resMsgDB = Object.freeze({
     [statusCode.HTTP.SWITCHING_PROTOCOLS]: 'Switching Protocols',
     [statusCode.HTTP.PROCESSING]: 'Processing',
     [statusCode.HTTP.EARLY_HINTS]: 'Early Hints',
-    
+
     [statusCode.HTTP.OK]: 'OK',
     [statusCode.HTTP.CREATED]: 'Created',
     [statusCode.HTTP.ACCEPTED]: 'Accepted',
@@ -32,7 +32,7 @@ export const resMsgDB = Object.freeze({
     [statusCode.HTTP.GONE]: 'Gone',
     [statusCode.HTTP.PAYLOAD_TOO_LARGE]: 'Payload Too Large',
     [statusCode.HTTP.UNSUPPORTED_MEDIA_TYPE]: 'Unsupported Media Type',
-    [statusCode.HTTP.TOO_MANY_REQUESTS]:'Too Many Requests',
+    [statusCode.HTTP.TOO_MANY_REQUESTS]: 'Too Many Requests',
 
     [statusCode.HTTP.INTERNAL_SERVER_ERROR]: 'Internal Server Error',
     [statusCode.HTTP.NOT_IMPLEMENTED]: 'Not Implemented',
@@ -41,9 +41,9 @@ export const resMsgDB = Object.freeze({
     [statusCode.HTTP.GATEWAY_TIMEOUT]: 'Gateway Timeout',
   },
 
-  CUSTOM:{
-    [statusCode.CUSTOM.DB.DB_EXEC_FAIL]:'Qry Execute Success',
-    [statusCode.CUSTOM.DB.DB_EXEC_FAIL]:'Qry Execute Fail',
+  CUSTOM: {
+    [statusCode.CUSTOM.DB.DB_EXEC_FAIL]: 'Qry Execute Success',
+    [statusCode.CUSTOM.DB.DB_EXEC_FAIL]: 'Qry Execute Fail',
   }
 
 });
@@ -52,8 +52,11 @@ export type Message = typeof resMsgDB;
 
 
 export const utilityMsg = Object.freeze({
-    PROJECT:{
-      PROJECT_CREATE: "Project created successfully.",
-      PROJECT_UPDATE: "Project updated successfully."
-    }
+  PROJECT: {
+    PROJECT_CREATE: "Project created successfully.",
+    PROJECT_UPDATE: "Project updated successfully."
+  },
+  RESOURCE_NOT_FOUND: {
+    RESRC_NT_FND: 'Api not found',
+  }
 })
