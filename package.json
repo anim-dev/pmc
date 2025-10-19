@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "dev:compile:watch": "tsx watch src/server.ts",
+    "dev": "tsx watch src/server.ts",
     "dist:prod": "npx tsc",
     "prod:build": "npx tsc && node dist/server.js",
     "prod:watch:compile": "tsc --watch",
