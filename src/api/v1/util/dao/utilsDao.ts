@@ -8,14 +8,13 @@ export const getMasterData_Dao = AsyncDaoTryCatch(
         const result: Record<string, any[]> = {};
 
         const configs = await prisma.master_table_map.findMany({
-            where: { code: { in: reqParam }, isactive: true }
+            where: { code: { in: reqParam }, isActive: true }
         });
-
         for (const type of reqParam) {
             const config: any = configs.find((cfg: any) => cfg.code === type);
             if (config) {
                 // Type assertion below
-                const data = await prisma.$queryRawUnsafe<any[]>(`SELECT * FROM ${config.tablename}`);
+                const data = await prisma.$queryRawUnsafe<any[]>(`SELECT * FROM ${config.tableName}`);
                 result[type] = data;
             } else {
                 result[type] = [];
@@ -38,9 +37,7 @@ export const fetchAllZones_Dao = AsyncDaoTryCatch(
 
 export const fetchWardsByZone_Dao = AsyncDaoTryCatch(
     async (zoneId: Number) => {
-        const data = await prisma.wards.findMany({
-            where: { zoneid: zoneId }
-        });
+        const data =  await prisma.wards.findMany({ where: { zoneId: zoneId } });
         return createInternalResponse(true, statusCode.HTTP.OK, '', data);
     },
     "fetchAllZones_Dao"
@@ -48,9 +45,7 @@ export const fetchWardsByZone_Dao = AsyncDaoTryCatch(
 
 export const fetchPrabhagsByWard_Dao = AsyncDaoTryCatch(
     async (wardId: Number) => {
-        const data = await prisma.prabhags.findMany({
-            where: { wardid: wardId }
-        });
+        const data = await prisma.prabhags.findMany({ where: { wardId: wardId } });
         return createInternalResponse(true, statusCode.HTTP.OK, '', data);
     },
     "fetchAllZones_Dao"

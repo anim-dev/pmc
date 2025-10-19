@@ -3,111 +3,119 @@ import prisma from "../../../../prisma";
 import { AsyncDaoTryCatch } from "../../../../utils/commomAsuncHandler";
 import { createInternalResponse } from "../../../../utils/internalCommRes";
 
-export const addNewProject_Dao = AsyncDaoTryCatch(
-    async (reqBody: any) => {
-        const {
-            project_id,
-            title,
-            projectcost,
-            fromdate,
-            todate,
-            zoneid,
-            contractorname,
-            outwardnumber,
-            type_of_work,
-            outwarddate,
-            imagepath,
-            je_name,
-            de_name,
-            ee_name,
-            consultant,
-            qualityassurance,
-            description,
-            isactive,
-            project_status_id // for update scenario
-        } = reqBody;
+export const addNewProject_Dao = AsyncDaoTryCatch(async (reqBody: any) => {
+  const {
+    projectId,
+    title,
+    projectCost,
+    fromDate,
+    toDate,
+    zoneId,
+    contractorName,
+    outwardNumber,
+    typeOfWork,
+    outwardDate,
+    imagePath,
+    jeName,
+    deName,
+    eeName,
+    consultant,
+    qualityAssurance,
+    description,
+    isActive,
+    createdBy,
+    projectStatusId,
+    stageTypeIds,    // Array of stageTypeId's
+    otherTypeName    // Only set if type 12 is chosen
+  } = reqBody;
 
-        let project;
-        if (project_id) {
-            // UPDATE project
-            project = await prisma.project.update({
-                where: { id: Number(project_id) },
-                data: {
-                    title,
-                    projectcost,
-                    fromdate: new Date(fromdate),
-                    todate: new Date(todate),
-                    zoneid,
-                    contractorname,
-                    outwardnumber,
-                    type_of_work,
-                    outwarddate: new Date(outwarddate),
-                    imagepath,
-                    je_name,
-                    de_name,
-                    ee_name,
-                    consultant,
-                    qualityassurance,
-                    description,
-                    isactive: isactive ?? true
-                }
-            });
+  let project;
 
-            // If a status is provided, insert mapping
-            if (project_status_id) {
-                await prisma.project_status_mapping.create({
-                    data: {
-                        project_id: project.id,
-                        status_id: project_status_id, // should be integer
-                        // changedat will default to now()
-                    }
-                });
-            }
+  if (projectId) {
+    // --- UPDATE project ---
+    project = await prisma.project.update({
+      where: { id: Number(projectId) },
+      data: {
+        title,
+        projectCost,
+        fromDate: new Date(fromDate),
+        toDate: new Date(toDate),
+        zoneId,
+        contractorName,
+        outwardNumber,
+        typeOfWork,
+        outwardDate: new Date(outwardDate),
+        imagePath,
+        jeName,
+        deName,
+        eeName,
+        consultant,
+        qualityAssurance,
+        description,
+        updatedBy: createdBy,
+        isActive: isActive ?? true,
+        projectStatusId: projectStatusId ?? 1
+      },
+    });
 
-        } else {
-            // CREATE project
-            project = await prisma.project.create({
-                data: {
-                    title,
-                    projectcost,
-                    fromdate: new Date(fromdate),
-                    todate: new Date(todate),
-                    zoneid,
-                    contractorname,
-                    outwardnumber,
-                    type_of_work,
-                    outwarddate: new Date(outwarddate),
-                    imagepath,
-                    je_name,
-                    de_name,
-                    ee_name,
-                    consultant,
-                    qualityassurance,
-                    description,
-                    isactive: isactive ?? true
-                }
-            });
+    // --- UPDATE mappings: Remove old + insert new ---
+    // 1. Delete all previous mappings for this project
+    await prisma.project_stage_type_mapping.deleteMany({
+      where: { projectId: Number(projectId) }
+    });
 
-            // Get the "Pending" status_id from project_status table
-            const pendingStatus = await prisma.project_status.findFirst({
-                where: { code: 'PENDING', isactive: true }
-            });
+    // 2. Insert new mappings
+    if (stageTypeIds && Array.isArray(stageTypeIds) && stageTypeIds.length > 0) {
+      const stageTypeMappingCreateInputs = stageTypeIds.map((typeId: number) => ({
+        projectId: Number(projectId),
+        stageTypeId: typeId,
+        otherTypeName: typeId === 12 ? otherTypeName : "",
+        isActive: true,
+      }));
+      await prisma.project_stage_type_mapping.createMany({
+        data: stageTypeMappingCreateInputs
+      });
+    }
+  } else {
+    // --- CREATE project ---
+    project = await prisma.project.create({
+      data: {
+        title,
+        projectCost,
+        fromDate: new Date(fromDate),
+        toDate: new Date(toDate),
+        zoneId,
+        contractorName,
+        outwardNumber,
+        typeOfWork,
+        outwardDate: new Date(outwardDate),
+        imagePath,
+        jeName,
+        deName,
+        eeName,
+        consultant,
+        qualityAssurance,
+        description,
+        isActive: isActive ?? true,
+        createdBy,
+        updatedBy: createdBy,
+        projectStatusId: projectStatusId ?? 1
+      },
+    });
 
-            // Insert mapping for Pending status
-            await prisma.project_status_mapping.create({
-                data: {
-                    project_id: project.id,
-                    status_id: pendingStatus?.id || 1 // fallback to 1 if not found
-                }
-            });
-        }
+    // --- Add stage type mappings ---
+    if (stageTypeIds && Array.isArray(stageTypeIds) && stageTypeIds.length > 0) {
+      const stageTypeMappingCreateInputs = stageTypeIds.map((typeId: number) => ({
+        projectId: project.id,
+        stageTypeId: typeId,
+        otherTypeName: typeId === 12 ? otherTypeName : undefined,
+        isActive: true,
+      }));
+      await prisma.project_stage_type_mapping.createMany({
+        data: stageTypeMappingCreateInputs
+      });
+    }
+  }
 
-        return createInternalResponse(
-            true,
-            statusCode.HTTP.OK,
-            "",
-            project
-        );
-    },
-    'addNewProject_Dao'
-);
+  return createInternalResponse(true, statusCode.HTTP.OK, "", project);
+}, "addNewProject_Dao");

@@ -12,7 +12,7 @@ export const addNewProject_Model = AsyncModelTryCatch(
     return createInternalResponse(
       true,
       statusCode.HTTP.OK,
-      reqBody.project_id
+      reqBody.projectId
         ? utilityMsg.PROJECT.PROJECT_UPDATE
         : utilityMsg.PROJECT.PROJECT_CREATE,
       null

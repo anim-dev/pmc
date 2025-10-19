@@ -9,279 +9,311 @@ datasource db {
 
 model users {
   id             Int     @id @default(autoincrement())
-  organizationid Int
+  organizationId Int     @map("organizationid")
   username       String
   email          String?
   designation    String?
   phone          String?
-  passwordhash   String?
-  firstname      String?
-  lastname       String?
-  displayname    String?
+  passwordHash   String? @map("passwordhash")
+  firstName      String? @map("firstname")
+  lastName       String? @map("lastname")
+  displayName    String? @map("displayname")
   title          String?
   password       String?
-  isactive       Boolean @default(false)
+  isActive       Boolean @default(false) @map("isactive")
 }
 
 model authtokens {
-  id                  BigInt   @id @default(autoincrement())
-  accesstoken         String?
-  citizenid           BigInt?
-  userid              Int?
-  created             DateTime
-  expires             DateTime
-  citizenloginotpid   BigInt?
+  id                BigInt   @id @default(autoincrement())
+  accessToken       String?  @map("accesstoken")
+  citizenId         BigInt?  @map("citizenid")
+  userId            Int?     @map("userid")
+  created           DateTime
+  expires           DateTime
+  citizenLoginOtpId BigInt?  @map("citizenloginotpid")
 }
 
 model citizenloginotps {
-  id          BigInt   @id @default(autoincrement())
-  otp         String?
-  created     DateTime
-  phone       String?
-  citizenid   BigInt?
+  id        BigInt   @id @default(autoincrement())
+  otp       String?
+  created   DateTime
+  phone     String?
+  citizenId BigInt?  @map("citizenid")
 }
 
 model citizens {
-  id                  BigInt   @id @default(autoincrement())
-  organizationid      Int
-  name                String?
-  gender              String?
-  phone               String?
-  isbhararipathakuser Boolean
+  id                    BigInt   @id @default(autoincrement())
+  organizationId        Int      @map("organizationid")
+  name                  String?
+  gender                String?
+  phone                 String?
+  isBharariPathakUser   Boolean  @map("isbhararipathakuser")
 }
 
 model complaintevidences {
-  id           BigInt   @id @default(autoincrement())
-  complaintid  BigInt?
-  type         Int
-  filepath     String?
+  id          BigInt   @id @default(autoincrement())
+  complaintId BigInt?  @map("complaintid")
+  type        Int
+  filePath    String?  @map("filepath")
 }
 
 model complaintfeedbacks {
-  id           BigInt   @id @default(autoincrement())
-  complaintid  BigInt?
-  rating       Int
-  text         String?
-  timestamp    DateTime
+  id        BigInt   @id @default(autoincrement())
+  complaintId BigInt? @map("complaintid")
+  rating    Int
+  text      String?
+  timestamp DateTime
 }
 
 model complaintstatuslogevidences {
-  id                    BigInt   @id @default(autoincrement())
-  type                  Int
-  filepath              String?
-  complaintstatuslogid  BigInt?
+  id                   BigInt   @id @default(autoincrement())
+  type                 Int
+  filePath             String?  @map("filepath")
+  complaintStatusLogId BigInt?  @map("complaintstatuslogid")
 }
 
 model complaintstatuslogs {
-  id            BigInt   @id @default(autoincrement())
-  status        String?
-  timestamp     DateTime
-  complaintid   BigInt?
-  updatedbyid   Int?
-  foruserid     Int?
-  remarks       String?
-  logmessage    String?
-  latitude      String?
-  longitude     String?
+  id           BigInt   @id @default(autoincrement())
+  status       String?
+  timestamp    DateTime
+  complaintId  BigInt?  @map("complaintid")
+  updatedById  Int?     @map("updatedbyid")
+  forUserId    Int?     @map("foruserid")
+  remarks      String?
+  logMessage   String?  @map("logmessage")
+  latitude     String?
+  longitude    String?
 }
 
 model complaints {
   id                    BigInt   @id @default(autoincrement())
-  complaintid           String?
+  complaintId           String?  @map("complaintid")
   latitude              String?
   longitude             String?
   address               String?
   description           String?
-  potholecount          Int
-  pothholetypeid        Int?
+  potholeCount          Int      @map("potholecount")
+  potholeTypeId         Int?     @map("pothholetypeid")
   timestamp             DateTime
-  citizenid             BigInt?
-  organizationid        Int?
-  prabhagid             Int?
-  isflaggedfornodal     Boolean  @default(false)
+  citizenId             BigInt?  @map("citizenid")
+  organizationId        Int?     @map("organizationid")
+  prabhagId             Int?     @map("prabhagid")
+  isFlaggedForNodal     Boolean  @default(false) @map("isflaggedfornodal")
 }
 
 model organizations {
-  id             Int      @id @default(autoincrement())
-  name           String?
-  hostname       String?
-  apihostname    String?
-  isdeleted      Boolean
-  logo           String?
+  id          Int    @id @default(autoincrement())
+  name        String?
+  hostName    String? @map("hostname")
+  apiHostName String? @map("apihostname")
+  isDeleted   Boolean  @map("isdeleted")
+  logo        String?
 }
 
 model potholetypes {
   id             Int      @id @default(autoincrement())
   name           String?
-  organizationid Int?
-  isactive       Boolean  @default(false)
+  organizationId Int?     @map("organizationid")
+  isActive       Boolean  @default(false) @map("isactive")
 }
 
 model prabhaggeocoordinates {
-  id             Int      @id @default(autoincrement())
-  prabhagid      Int?
+  id             Int    @id @default(autoincrement())
+  prabhagId      Int?   @map("prabhagid")
   kml            String?
-  organizationid Int?
+  organizationId Int?   @map("organizationid")
 }
 
 model prabhags {
-  id         Int      @id @default(autoincrement())
-  niceid     Int
-  objectid   Int
-  name       String?
-  wardid     Int?
-  subid      String?
-  isactive   Boolean  @default(false)
+  id        Int     @id @default(autoincrement())
+  niceId    Int     @map("niceid")
+  objectId  Int     @map("objectid")
+  name      String?
+  wardId    Int?    @map("wardid")
+  subId     String? @map("subid")
+  isActive  Boolean @default(false) @map("isactive")
 }
 
 model roles {
-  id             Int      @id @default(autoincrement())
+  id             Int    @id @default(autoincrement())
   name           String?
-  organizationid Int?
+  organizationId Int?   @map("organizationid")
 }
 
 model smslogs {
-  id                BigInt   @id @default(autoincrement())
-  timestamp         DateTime
-  templateid        String?
-  body              String?
-  phone             String?
-  citizenid         BigInt?
-  userid            Int?
-  reason            String?
-  issent            Boolean
-  isdelivered       String?
-  gatewayrecordid   String?
-  complaintid       BigInt?
+  id              BigInt   @id @default(autoincrement())
+  timestamp       DateTime
+  templateId      String?  @map("templateid")
+  body            String?
+  phone           String?
+  citizenId       BigInt?  @map("citizenid")
+  userId          Int?     @map("userid")
+  reason          String?
+  isSent          Boolean  @map("issent")
+  isDelivered     String?  @map("isdelivered")
+  gatewayRecordId String?  @map("gatewayrecordid")
+  complaintId     BigInt?  @map("complaintid")
 }
 
 model userprabhags {
-  id         Int      @id @default(autoincrement())
-  userid     Int?
-  prabhagid  Int?
+  id       Int   @id @default(autoincrement())
+  userId   Int?  @map("userid")
+  prabhagId Int? @map("prabhagid")
 }
 
 model userroles {
-  id       Int      @id @default(autoincrement())
-  userid   Int?
-  roleid   Int?
+  id     Int   @id @default(autoincrement())
+  userId Int?  @map("userid")
+  roleId Int?  @map("roleid")
 }
 
 model userwards {
-  id       Int      @id @default(autoincrement())
-  userid   Int?
-  wardid   Int?
+  id     Int   @id @default(autoincrement())
+  userId Int?  @map("userid")
+  wardId Int?  @map("wardid")
 }
 
 model userzones {
-  id       Int      @id @default(autoincrement())
-  userid   Int?
-  zoneid   Int?
+  id     Int   @id @default(autoincrement())
+  userId Int?  @map("userid")
+  zoneId Int?  @map("zoneid")
 }
 
 model wards {
-  id         Int      @id @default(autoincrement())
-  niceid     Int
-  name       String?
-  zoneid     Int?
-  isactive   Boolean  @default(false)
+  id       Int     @id @default(autoincrement())
+  niceId   Int     @map("niceid")
+  name     String?
+  zoneId   Int?    @map("zoneid")
+  isActive Boolean @default(false) @map("isactive")
 }
 
 model workqualitystandards {
-  id                    BigInt   @id @default(autoincrement())
-  usedstandard1         Boolean
-  usedstandard2         Boolean
-  usedstandard3         Boolean
-  usedstandard4         Boolean
-  complaintstatuslogid  BigInt?
+  id                   BigInt  @id @default(autoincrement())
+  usedStandard1        Boolean @map("usedstandard1")
+  usedStandard2        Boolean @map("usedstandard2")
+  usedStandard3        Boolean @map("usedstandard3")
+  usedStandard4        Boolean @map("usedstandard4")
+  complaintStatusLogId BigInt? @map("complaintstatuslogid")
 }
 
 model zones {
-  id              Int      @id @default(autoincrement())
-  niceid          String?
-  name            String?
-  organizationid  Int
-  isactive        Boolean  @default(false)
+  id             Int     @id @default(autoincrement())
+  niceId         String? @map("niceid")
+  name           String?
+  organizationId Int     @map("organizationid")
+  isActive       Boolean @default(false) @map("isactive")
 }
 
 model work {
-  id      Int    @id @default(autoincrement())
-  name    String
-  code    String?
-  isactive Boolean @default(true)
-  createdat DateTime @default(now())
-  updatedat DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  name      String
+  code      String?
+  isActive  Boolean  @default(true) @map("isactive")
+  createdAt DateTime @default(now()) @map("createdat")
+  updatedAt DateTime @updatedAt @map("updatedat")
 }
 
 model master_table_map {
   id        Int    @id @default(autoincrement())
-  code      String @unique 
-  tablename String
-  isactive  Boolean @default(true)
+  code      String @unique
+  tableName String @map("tablename")
+  isActive  Boolean @default(true) @map("isactive")
 }
 
 model project {
   id                  Int      @id @default(autoincrement())
   title               String
-  projectcost         Float
-  fromdate            DateTime
-  todate              DateTime
-  zoneid              Int      // Reference to your zones table, or remove if just string
-  contractorname      String
-  outwardnumber       String
-  type_of_work        String   // Or use Int if referencing work table
-  outwarddate         DateTime
-  imagepath           String?  // Store image file path, nullable if not always present
-  je_name             String?  // Junior Engineer
-  de_name             String?  // Deputy Engineer
-  ee_name             String?  // Executive Engineer
-  consultant          String?
-  qualityassurance    String?
-  description         String?
-  createdat           DateTime @default(now())
-  updatedat           DateTime @updatedAt
-  isactive            Boolean  @default(true)
+  projectCost         Float    @map("projectcost")
+  fromDate            DateTime @map("fromdate")
+  toDate              DateTime @map("todate")
+  zoneId              Int      @map("zoneid")
+  contractorName      String   @map("contractorname")
+  outwardNumber       String   @map("outwardnumber")
+  typeOfWork          String   @map("type_of_work")
+  outwardDate         DateTime @map("outwarddate")
+  imagePath           String?  @map("imagepath")
+  jeName              String?  @map("je_name")
+  deName              String?  @map("de_name")
+  eeName              String?  @map("ee_name")
+  consultant          String?  @map("consultant")
+  qualityAssurance    String?  @map("qualityassurance")
+  description         String?  @map("description")
+  projectStatusId     Int      @map("project_status_id")
+  createdAt           DateTime @default(now()) @map("createdat")
+  updatedAt           DateTime @updatedAt      @map("updatedat")
+  createdBy           Int      @map("createdby")
+  updatedBy           Int      @map("updatedby")
+  isActive            Boolean  @default(true)  @map("isactive")
 
-  project_status_mappings project_status_mapping[]
+  // Relations
+  stageTypeMappings         project_stage_type_mapping[]  @relation("ProjectStageTypeMappings")
+  stageTypeStatusMappings   project_stage_type_status_mapping[] @relation("ProjectStageTypeStatusMappings")
+
+  @@map("project")
+}
+
+model project_stage_type_mapping {
+  id            Int      @id @default(autoincrement())
+  projectId     Int      @map("project_id")
+  stageTypeId   Int      @map("stage_type_id")
+  otherTypeName String?  @map("other_type_name")
+  isActive      Boolean  @default(true) @map("isactive")
+  createdAt     DateTime @default(now()) @map("createdat")
+
+  // Relations
+  project        project  @relation(fields: [projectId], references: [id], name: "ProjectStageTypeMappings")
+  stageType      stage_type @relation(fields: [stageTypeId], references: [id])
+  statusMappings project_stage_type_status_mapping[] @relation("StageTypeMappingToStatusMappings")
+}
+
+model project_stage_type_status_mapping {
+  id                 Int      @id @default(autoincrement())
+  projectId          Int      @map("project_id")
+  stageTypeId        Int      @map("stage_type_id")
+  stageTypeMappingId Int      @map("stage_type_mapping_id")
+  isActive           Boolean  @default(true) @map("isactive")
+  createdAt          DateTime @default(now()) @map("createdat")
+  stageProgress      Int      @default(0)    @map("stage_progress")
+  stageStatusId      Int      @map("stage_status_id")
+  stageBudgetId      Int      @map("stage_budget_id")
+  stageFromDate      DateTime @map("stage_from_date")
+  stageToDate        DateTime @map("stage_to_date")
+  stageImgPath       String   @map("stage_img_path")
+  stageDesc          String   @map("stage_desc")
+
+  // Relations
+  projectStageTypeMapping project_stage_type_mapping @relation(fields: [stageTypeMappingId], references: [id], name: "StageTypeMappingToStatusMappings")
+  project                project @relation(fields: [projectId], references: [id], name: "ProjectStageTypeStatusMappings")
+  stageType              stage_type @relation(fields: [stageTypeId], references: [id])
 }
 
 model stage_type {
+  id         Int      @id @default(autoincrement())
+  name       String
+  code       String
+  isActive   Boolean  @default(true) @map("isactive")
+  createdAt  DateTime @default(now()) @map("createdat")
+  updatedAt  DateTime @updatedAt      @map("updatedat")
+
+  // Relations
+  stageTypeMappings         project_stage_type_mapping[]
+  stageTypeStatusMappings   project_stage_type_status_mapping[]
+}
+
+model status_type {
   id        Int      @id @default(autoincrement())
   name      String
   code      String
-  isactive  Boolean  @default(true)
-  createdat DateTime @default(now())
-  updatedat DateTime @updatedAt
-}
-
-model project_status {
-  id        Int      @id @default(autoincrement())
-  name      String   // e.g., "Pending", "In Progress", "Completed"
-  code      String   // e.g., "PENDING", "IN_PROGRESS", "COMPLETED"
-  isactive  Boolean  @default(true)
-  createdat DateTime @default(now())
-  updatedat DateTime @updatedAt
-
-  // Relation for mappings
-  project_status_mappings project_status_mapping[]
-}
-
-model project_status_mapping {
-  id         Int           @id @default(autoincrement())
-  project_id Int
-  status_id  Int
-  changedat  DateTime      @default(now()) // Optionally track status change time
-
-  // Relations
-  project     project?        @relation(fields: [project_id], references: [id])
-  status      project_status  @relation(fields: [status_id], references: [id])
+  isActive  Boolean  @default(true) @map("isactive")
+  createdAt DateTime @default(now()) @map("createdat")
+  updatedAt DateTime @updatedAt @map("updatedat")
 }
 
 model budget_utilization {
   id        Int      @id @default(autoincrement())
   name      String
   code      String
-  isactive  Boolean  @default(true)
-  createdat DateTime @default(now())
-  updatedat DateTime @updatedAt
+  isActive  Boolean  @default(true) @map("isactive")
+  createdAt DateTime @default(now()) @map("createdat")
+  updatedAt DateTime @updatedAt @map("updatedat")
 }
