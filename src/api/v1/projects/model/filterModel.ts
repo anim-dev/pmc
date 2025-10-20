@@ -2,7 +2,7 @@ import { Request } from "express";
 import { AsyncModelTryCatch } from "../../../../utils/commomAsuncHandler";
 import { createInternalResponse } from "../../../../utils/internalCommRes";
 import statusCode from "../../../../constants/statusCode";
-import { filterProjectsData_Dao } from "../dao/filterDao";
+import { filterProjectsData_Dao, projectDetailsInfoById_Dao } from "../dao/filterDao";
 
 
 export const filterProjectsData_Model = AsyncModelTryCatch(
@@ -39,3 +39,18 @@ export const filterProjectsData_Model = AsyncModelTryCatch(
     },
     'filterProjectsData_Model'
 );
+
+
+export const projectDetailsInfoById_Model = AsyncModelTryCatch(
+    async(req:Request):Promise<any> =>{
+        const { projectId } = req.body;
+        const projectDetailsInfo = await projectDetailsInfoById_Dao(projectId);
+         return createInternalResponse(
+            true,
+            statusCode.HTTP.OK,
+            'Projects details fetch successfully',
+            projectDetailsInfo.data
+        );
+
+    },'projectDetailsInfoById_Model'
+)
