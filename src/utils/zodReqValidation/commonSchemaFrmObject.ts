@@ -23,8 +23,8 @@ export const projectCreateForm = z.object({
   stageTypeIds: stageTypeIds_Field,
   otherTypeName: otherTypeName_Field,
   // Uncomment and add more as needed
-  // projectId: z.number().optional(),
-  // isActive: z.boolean().optional()
+  projectId: z.number().optional(),
+  isActive: z.boolean().optional()
 })
 .refine(
   (data) =>

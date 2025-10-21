@@ -29,7 +29,7 @@ export const addNewProject_Dao = AsyncDaoTryCatch(async (reqBody: any) => {
     otherTypeName    // Only set if type 12 is chosen
   } = reqBody;
 
-  let project:any;
+  let project;
 
   if (projectId) {
     // --- UPDATE project ---
